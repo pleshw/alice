@@ -69,4 +69,13 @@ export default class GridManager<T> extends Grid<T> {
     }
     return adjacent.filter(_pos => { return this.valid(_pos.x, _pos.y); });
   }
+
+  /**
+   * Returns the copy of a part of this grid.
+   * @param to 
+   * @param from 
+   */
+  getPart(to: number, from: number): Grid<T> {
+    return;
+  }
 }

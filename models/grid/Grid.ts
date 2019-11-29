@@ -17,10 +17,14 @@ export default class Grid<T> {
       this._cell[i] = new Cell(cState.FREE);
   }
 
+  /**
+   * Copy a grid or a part of it that fits.
+   * @param clone the grid that will be copied
+   */
   copy(clone: Grid<T>): void {
-    for (let y = 0; y < this.rows; y++)
-      for (let x = 0; x < this.cols; x++)
-        this._cell[this.index(x, y)] = clone._cell[clone.index(x, y)];
+    for (let y = 0; y < this.rows || y < clone.rows; y++)
+      for (let x = 0; x < this.cols || x < clone.cols; x++)
+        this._cell[this.index(x, y)] = clone.cell(x, y);
   }
 
   get length(): number {
@@ -31,7 +35,7 @@ export default class Grid<T> {
     return this._cell;
   }
 
-  index(x: number, y: number): number {
+  private index(x: number, y: number): number {
     if (!this.valid(x, y)) return cState.INVALID;
     return x + (y * this.cols);
   }
