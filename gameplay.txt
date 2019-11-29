@@ -1,0 +1,3 @@
+O personagem deve ser controlado com "asdw" para movimentação e cliques para ataque
+
+Segurar o clique direito ativa um target e clicar com a esquerda enquanto segura lança algo
