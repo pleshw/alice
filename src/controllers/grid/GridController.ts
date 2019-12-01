@@ -1,8 +1,5 @@
-import Grid from "./Grid";
-import Coords from "../../lib/Coords";
-import { Cell } from "./Cell";
 
-export default class GridManager<T> extends Grid<T> {
+class GridController<T> extends Grid<T> {
 
   /**
    * Changes a grid cell state to free
@@ -12,7 +9,7 @@ export default class GridManager<T> extends Grid<T> {
    * @param y 
    */
   free(x: number, y: number): void {
-    this.cell(x, y).free();
+    this.getCell(x, y).free();
   }
 
   /**
@@ -22,7 +19,7 @@ export default class GridManager<T> extends Grid<T> {
   * @param y
   */
   occupy(x: number, y: number): void {
-    this.cell(x, y).occupy();
+    this.getCell(x, y).occupy();
   }
 
   /**
@@ -32,7 +29,7 @@ export default class GridManager<T> extends Grid<T> {
   * @param y
   */
   block(x: number, y: number): void {
-    this.cell(x, y).block();
+    this.getCell(x, y).block();
   }
 
   /**
@@ -43,7 +40,7 @@ export default class GridManager<T> extends Grid<T> {
    */
   adjacent(x: number, y: number, getDiagonal: boolean = true): Cell<T>[] {
     return this.adjacentPosition(x, y, getDiagonal).map((coord) => {
-      return this.cell(coord.x, coord.y);
+      return this.getCell(coord.x, coord.y);
     });
   }
 
@@ -75,7 +72,15 @@ export default class GridManager<T> extends Grid<T> {
    * @param to 
    * @param from 
    */
-  getPart(to: number, from: number): Grid<T> {
-    return;
+  getPart(from: Coords, to: Coords): Grid<T> {
+    let newGridWidth: number = to.x - from.x;
+    let newGridHeight: number = to.y - from.y;
+
+    let newGrid = new Grid<T>(newGridHeight, newGridWidth);
+    for (let y = 0; y < newGridHeight; y++)
+      for (let x = 0; x < newGridWidth; x++)
+        newGrid.setCell(x, y, this.getCell(from.x + x, from.y + y).copy())
+
+    return newGrid;
   }
 }

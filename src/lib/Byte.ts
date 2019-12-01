@@ -41,5 +41,3 @@ class Byte {
 }
 
 enum ByteState { INVALID = -1, ACTIVE = 1, INACTIVE = 2 };
-
-export { Byte, ByteState };

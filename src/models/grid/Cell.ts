@@ -1,7 +1,19 @@
-import { Byte } from "../../lib/Byte";
 
 class Cell<ContentType> extends Byte {
-  content: ContentType;
+  private content: ContentType | null = null;
+
+  constructor(content?: ContentType | null, state?: CellState) {
+    super(state || CellState.FREE);
+    this.content = content || null;
+  }
+
+  getContent(): ContentType | null {
+    return this.content;
+  }
+
+  copy(): Cell<ContentType> {
+    return new Cell<ContentType>(this.content, this.state());
+  }
 
   /**
   * Changes a cell state to free
@@ -43,4 +55,4 @@ class Cell<ContentType> extends Byte {
 
 enum CellState { INVALID = -1, FREE = 1, SEEN = 2, OCCUPIED = 4, BLOCKED = 8, ACTIVE = 16, INACTIVE = 32 };
 
-export { Cell, CellState }
+enum cState { INVALID = -1, FREE = 1, SEEN = 2, OCCUPIED = 4, BLOCKED = 8, ACTIVE = 16, INACTIVE = 32 };
